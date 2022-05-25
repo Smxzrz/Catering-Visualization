@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>数据可视化</title>
+    <link rel="stylesheet" href="../static/css/index.css" />
+    <script src="../static/js/jquery.js"></script>
+    <script src="../static/js/jquery.tmpl.js"></script>
+</head>
+
+<body>
+    <header>
+        <h1>餐饮业综合案例数据可视化</h1>
+        <div class="showname">{{ dict_return['hotel'] }}</div>
+        <div class="showTime">123123</div>
+        <script>
+            // 格式： 当前时间：2020年3月17-0时54分14秒
+            var t = null;
+            t = setTimeout(time, 1000); //開始运行
+            function time() {
+                clearTimeout(t); //清除定时器
+                dt = new Date();
+                var y = dt.getFullYear();
+                var mt = dt.getMonth() + 1;
+                var day = dt.getDate();
+                var h = dt.getHours(); //获取时
+                var m = dt.getMinutes(); //获取分
+                var s = dt.getSeconds(); //获取秒
+                document.querySelector(".showTime").innerHTML = '当前时间：' + y + "年" + mt + "月" + day + "日" + "-" + h +
+                    "时" + m + "分" + s + "秒";
+                t = setTimeout(time, 1000); //设定定时器，循环运行
+            }
+        </script>
+    </header>
+    <!--    页面主体部分-->
+    <section class="mainbox">
+        <div class="column">
+            <div class="panel bar">
+                <h2>柱形图-{{dict_return['bar_data'].title|safe}}销量（数）</h2>
+                <div class="chart">图标</div>
+                <div class="panel-footer"></div>
+            </div>
+            <div class="panel line">
+                <h2>折线图-{{dict_return['line_data'].title|safe}}销量（金额）</h2>
+                <div class="chart">图标</div>
+                <div class="panel-footer"></div>
+            </div>
+            <div class="panel qipao">
+                <h2>气泡图-会员消费金额</h2>
+                <div class="chart">图标</div>
+                <div class="panel-footer"></div>
+            </div>
+        </div>
+        <div class="column">
+            <!-- 搜索框模块 -->
+            <div class="search">
+                <form method="post">
+                    <label>
+                        店铺名称:
+                        <input type="text" placeholder="{{ dict_return['h'] }}" name="hotel">
+                    </label>
+                    <label>
+                        菜品类别:
+                        <input type="text" placeholder="{{dict_return['dish']}}" name="dish">
+                    </label>
+                    <button type="submit"> 提交</button>
+                </form>
+            </div>
+            <div class="tablebox">
+
+                <div class="tbl-header">
+                    <table border="0" cellpadding="0" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>订单号</th>
+                                <th>菜品名称</th>
+                                <th>销量</th>
+                                <th>单价</th>
+                                <th>消费金额</th>
+                            </tr>
+                        </thead>
+                        <tbody style="opacity:0;"></tbody>
+                    </table>
+                </div>
+
+                <div class="tbl-body">
+                    <table border="0" cellspacing="0" cellpadding="0">
+                        <thead>
+                            <tr>
+                                <th>订单号</th>
+                                <th>会员名</th>
+                                <th>销量</th>
+                                <th>单价</th>
+                                <th>消费金额</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+            <!-- 地图模块 -->
+            <div class="map">
+                <div class="map1"></div>
+                <div class="map2"></div>
+                <div class="map3"></div>
+                <div class="chart"></div>
+            </div>
+        </div>
+        <div class="column">
+
+            <div class="panel pie1">
+                <h2>菜品类别销量占比</h2>
+                <div class="chart"></div>
+                <div class="panel-footer"></div>
+            </div>
+            <div class="panel wordcloud">
+                <div class="chart"></div>
+                <div class="panel-footer"></div>
+            </div>
+            <div class="panel pie">
+                <h2>{{dict_return['line_data'].title|safe}}各菜品销量占比</h2>
+                <div class="chart">图标</div>
+                <div class="panel-footer"></div>
+            </div>
+        </div>
+    </section>
+
+    <script type="text/javascript">
+
+        var bar_data = {{ dict_return['bar_data']|safe }};
+        var line_data = {{ dict_return['line_data']|safe }};
+        var city_high = {{ dict_return['city_highlight']|safe }};
+        var sca_data = {{ dict_return['sca_data']|safe }};
+        var roll_data = {{ dict_return['roll_data']|safe }};
+        var pie_data = {{ dict_return['pie_data']|safe }};
+        var wordcloud_data = {{ dict_return['wordcloud_data']|safe }}
+        var pie1_data = {{ dict_return['pie1_data']|safe }}
+    </script>
+    <script src="../static/js/flexible.js"></script>
+    <script src="../static/js/echarts.js"></script>
+    <script src="../static/js/echarts-wordcloud.min.js"></script>
+    <script src="../static/js/guangdong.js"></script>
+    <script src="../static/js/index.js"></script>
+
+
+</body>
+
+</html>
